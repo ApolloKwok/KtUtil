@@ -1,0 +1,15 @@
+buildscript {
+    ext {
+        version_kt = '1.7.20'
+        lib_coroutine = "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.4"
+        lib_kotlin_reflect = "org.jetbrains.kotlin:kotlin-reflect:$version_kt"
+    }
+}
+
+plugins {
+    id 'org.jetbrains.kotlin.jvm' version "$version_kt" apply false
+}
+
+task clean(type: Delete) {
+    delete rootProject.buildDir
+}
