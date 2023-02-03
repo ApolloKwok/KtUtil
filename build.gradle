@@ -22,7 +22,6 @@ tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).configureEach{
                 "-Xexplicit-api=warning",
                 "-Xcontext-receivers",
                 "-opt-in=kotlin.contracts.ExperimentalContracts",
-                "-Xuse-k2",
         ]
     }
 }
@@ -42,7 +41,7 @@ java {
 }
 
 group = 'io.github.apollokwok'
-version = '1.0.2'
+version = '1.0.3'
 String URL = "github.com/ApolloKwok/KtUtil"
 
 publishing {
