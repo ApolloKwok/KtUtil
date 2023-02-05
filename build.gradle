@@ -1,6 +1,9 @@
 buildscript {
     ext {
         version_kt = '1.7.20'
+        version_this = '1.0.3'
+//        publishMode = 'snapshot'
+        publishMode = 'release'
     }
 }
 
@@ -13,7 +16,7 @@ plugins {
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-reflect:$version_kt"
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.4'
-    testImplementation 'junit:junit:4.13.2'
+    testImplementation 'org.jetbrains.kotlin:kotlin-test'
 }
 
 tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).configureEach{
@@ -34,18 +37,17 @@ kotlin {
     jvmToolchain(8)
 }
 
-//region maven publish
 java {
     withJavadocJar()
     withSourcesJar()
 }
 
 group = 'io.github.apollokwok'
-version = '1.0.3'
-String URL = "github.com/ApolloKwok/KtUtil"
+version = version_this
 
 publishing {
     publications {
+        String URL = "github.com/ApolloKwok/KtUtil"
         mavenJava(MavenPublication) {
             artifactId = 'kt-util'
             from components.java
@@ -84,7 +86,12 @@ publishing {
     }
     repositories {
         maven {
-            url = 'https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/'
+            if (publishMode == "release")
+                url = 'https://s01.oss.sonatype.org/service/local/staging/deploy/maven2'
+            else if(publishMode == "snapshot")
+                url = 'https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/snapshots'
+            else
+                throw Exception()
             credentials {
                 username = USERNAME
                 password = PASSWORD
@@ -102,4 +109,3 @@ javadoc {
         options.addBooleanOption('html5', true)
     }
 }
-//endregion
